@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\CreateEventRequest;
 use App\Models\Event;
+use App\Models\Tag;
 
 class EventController extends Controller
 {
@@ -17,7 +18,10 @@ class EventController extends Controller
      */
     public function index(): View
     {
-        return view('events.index');
+
+        return view('events.index', [
+            'events' => Event::with('country')->get()
+        ]);
     }
 
     /**
@@ -26,7 +30,8 @@ class EventController extends Controller
     public function create(): View
     {
         return view('events.create', [
-            'countries' => Country::all()
+            'countries' => Country::all(),
+            'tags' => Tag::all()
         ]);
     }
 
@@ -35,6 +40,7 @@ class EventController extends Controller
      */
     public function store(CreateEventRequest $request)
     {
+
         if($request->hasFile('image')) {
 
             $data = $request->validated();
@@ -42,7 +48,8 @@ class EventController extends Controller
             $data['user_id'] = auth()->id();
             $data['slug'] = Str::slug($request->title);
 
-            Event::create($data);
+            $event = Event::create($data);
+            $event->tags()->attach($request->tags);
             return to_route('events.index');
         }
         else return back();
