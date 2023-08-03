@@ -46,7 +46,18 @@
                                     {{ $event->country->name}}
                                 </th>
                                 <th scope="col" class="px-6 py-3">
-                                    Edit/Delete
+                                    <a
+                                        href="{{ route('events.edit', $event) }}"
+                                        class="text-green-400 hover:text-green-500"
+                                    >
+                                        Edit
+                                    </a>
+                                    <a
+                                        href="{{ route('events.destroy', $event) }}"
+                                        class="text-red-400 hover:text-red-500"
+                                    >
+                                        Delete
+                                    </a>
                                 </th>
                             </tr>
                         @empty
