@@ -4,7 +4,7 @@
             {{ __('Events') }}
         </h2>
         <div>
-            <a href="{{ route('events.create') }}" class="text-gray-800 hover:text-slate-200">
+            <a href="{{ route('events.create') }}" class="font-bold text-green-600 underline underline-offset-2 hover:text-slate-200">
             New Event
             </a>
         </div>
@@ -45,23 +45,35 @@
                                 <th scope="col" class="px-6 py-3">
                                     {{ $event->country->name}}
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <th scope="col" class="flex items-center gap-2 px-6 py-3">
                                     <a
                                         href="{{ route('events.edit', $event) }}"
                                         class="text-green-400 hover:text-green-500"
                                     >
                                         Edit
                                     </a>
-                                    <a
-                                        href="{{ route('events.destroy', $event) }}"
-                                        class="text-red-400 hover:text-red-500"
-                                    >
-                                        Delete
-                                    </a>
+                                                   <!-- Authentication -->
+                                    <form method="POST" action="{{ route('events.destroy', $event) }}">
+                                        @csrf
+                                        @method('DELETE')
+                                        <a
+                                            href="{{ route('events.destroy', $event) }}"
+                                            onclick="event.preventDefault();
+                                            this.closest('form').submit();"
+                                            class="text-red-400 hover:text-red-500"
+                                        >
+                                            Del
+                                        </a>
+                                    </form>
+
                                 </th>
                             </tr>
                         @empty
-                            <h1>No Events</h1>
+                        <tr>
+                            <td colspan="4" class="px-6 py-4 font-bold text-center text-gray-500 bg-white">
+                                No Events
+                            </td>
+                        </tr>
                         @endforelse
                     </tbody>
 
