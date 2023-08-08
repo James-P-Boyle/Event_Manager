@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Gallery;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 
@@ -12,7 +13,9 @@ class GalleryController extends Controller
      */
     public function index(): View
     {
-        return view('galleries.index');
+        return view('galleries.index', [
+            'galleries' => auth()->user()->galleries
+        ]);
     }
 
     /**
@@ -20,7 +23,7 @@ class GalleryController extends Controller
      */
     public function create()
     {
-        //
+        return view('galleries.create');
     }
 
     /**
@@ -28,7 +31,13 @@ class GalleryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'title' => 'required',
+            'description' => 'required',
+            'image' => 'required|image|mimes:png,jpg,jpeg,gif,svg|max:2048'
+        ]);
+
+        // $gallery = auth()->user()->
     }
 
     /**
