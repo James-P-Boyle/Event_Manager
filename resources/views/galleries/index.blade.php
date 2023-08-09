@@ -32,44 +32,45 @@
 
                     <tbody>
                         @forelse ($galleries as $gallery)
-                            <tr class="bg-white border-b">
-                                <th scope="col" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
+                            <tr class="h-full bg-white border-b">
+                                <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap">
                                     <img
                                         src="{{ asset('storage/' . $gallery->image) }}"
                                         alt=""
                                         class="w-20 h-20"
                                     >
                                 </th>
-                                <th scope="col" class="px-6 py-3">
+                                <td class="px-6 py-3">
                                     {{ $gallery->caption }}
-                                </th>
-                                <th scope="col" class="flex items-center gap-2 px-6 py-3">
-                                    <a
-                                        href="{{ route('galleries.edit', $gallery) }}"
-                                        class="text-green-400 hover:text-green-500"
-                                    >
-                                        Edit
-                                    </a>
-                                                   <!-- Authentication -->
-                                    <form method="POST" action="{{ route('galleries.destroy', $event) }}">
-                                        @csrf
-                                        @method('DELETE')
+                                </td>
+                                <td class="px-6 py-4">
+                                    <div class="flex space-x-2">
                                         <a
-                                            href="{{ route('galleries.destroy', $event) }}"
-                                            onclick="event.preventDefault();
-                                            this.closest('form').submit();"
-                                            class="text-red-400 hover:text-red-500"
+                                            href="{{ route('galleries.edit', $gallery) }}"
+                                            class="text-green-400 hover:text-green-500"
                                         >
-                                            Del
+                                            Edit
                                         </a>
-                                    </form>
-
-                                </th>
+                                                    <!-- Authentication -->
+                                        <form method="POST" action="{{ route('galleries.destroy', $gallery) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <a
+                                                href="{{ route('galleries.destroy', $gallery) }}"
+                                                onclick="event.preventDefault();
+                                                this.closest('form').submit();"
+                                                class="text-red-400 hover:text-red-500"
+                                            >
+                                                Del
+                                            </a>
+                                        </form>
+                                    </div>
+                                </td>
                             </tr>
                         @empty
                         <tr>
                             <td colspan="4" class="px-6 py-4 font-bold text-center text-gray-500 bg-white">
-                                No Galeries Found
+                                No Galleries Found
                             </td>
                         </tr>
                         @endforelse
