@@ -28,6 +28,9 @@ class Event extends Model
         'city_id'
     ];
 
+    // protected $casts = [
+    //     'start_date' => 'date:m/d/y'
+    // ];
 
     public function user(): BelongsTo
     {
