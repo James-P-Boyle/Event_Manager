@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Event;
 use Illuminate\Http\Request;
 
-class EventShowController extends Controller
+class LikeSystemController extends Controller
 {
     /**
      * Handle the incoming request.
@@ -14,6 +14,15 @@ class EventShowController extends Controller
     {
         $event = Event::findOrFail($id);
         $like = $event->likes()->where('user_id', auth()->id())->first();
-        return view('eventsShow', compact('event', 'like'));
+
+        if(!is_null($like)){
+            $like->delete();
+            return null;
+        } else {
+            $like = $event->likes()->create([
+                'user_id' => auth()->id()
+            ]);
+            return $like;
+        }
     }
 }

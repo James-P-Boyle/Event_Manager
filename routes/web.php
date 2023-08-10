@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\EventController;
 use App\Http\Controllers\EventShowController;
 use App\Http\Controllers\GalleryController;
+use App\Http\Controllers\LikeSystemController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\WelcomeController;
 use App\Models\Country;
@@ -33,6 +34,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::resource('/events', EventController::class);
+    Route::post('/events-like/{id}', LikeSystemController::class)->name('events.like');
     Route::resource('/galleries', GalleryController::class);
 
     Route::get('/countries/{country}', function (Country $country) {

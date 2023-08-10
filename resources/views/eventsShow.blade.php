@@ -19,10 +19,23 @@
                     </a>
                 </div>
                 @auth
-                    <div class="flex p-4 space-x-2">
+                    <div
+                        class="flex p-4 space-x-2"
+                        x-data="{
+                            eventLike: @js($like),
+                            city: null,
+                            cities: [],
+                            onHandleLike(event) {
+                                axios.post(`/events-like/{{ $event->id }}`).then(res => {
+                                    this.eventLike = res.data
+                                })
+                            }}"
+                    >
                         <button
+                            @click="onHandleLike"
+                            :class="eventLike ? 'text-green-700 scale-110 font-bold drop-shadow hover:text-green-800' : 'text-blue-700 hover:text-blue-800'"
                             type="button"
-                            class="focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2"
+                            class="focus:outline-none focus:ring-0 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"

@@ -9,13 +9,12 @@
                     <div class="lg:flex">
                         <img class="object-cover w-full h-56 rounded-lg lg:w-64" src="{{ asset('/storage/' . $event->image) }}" alt="{{ $event->title }}">
 
-                        <div class="flex flex-col justify-between py-6 lg:mx-6">
+                        <div class="flex flex-col justify-between lg:mx-6">
                             <a href="{{ route('eventShow', $event->id)}}" class="text-xl font-semibold text-gray-800 hover:underline ">
                                 {{ $event->title }}
                             </a>
 
-                            <span
-                                class="p-2 text-sm text-white bg-indigo-400 rounded-md dark:text-gray-300">
+                            <span class="p-2 text-sm text-white bg-indigo-400 rounded-md dark:text-gray-300">
                                 {{ $event->country->name }}
                             </span>
                             <span class="flex flex-wrap space-x-2">
