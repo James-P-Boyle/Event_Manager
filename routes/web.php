@@ -9,6 +9,8 @@ use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\EventShowController;
 use App\Http\Controllers\LikeSystemController;
 use App\Http\Controllers\SaveSystemController;
+use App\Http\Controllers\StoreCommentController;
+use App\Http\Controllers\DeleteCommentController;
 use App\Http\Controllers\AttendingSystemController;
 
 /*
@@ -39,6 +41,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/events-like/{id}', LikeSystemController::class)->name('events.like');
     Route::post('/events-save/{id}', SaveSystemController::class)->name('events.saved');
     Route::post('/events-attending/{id}', AttendingSystemController::class)->name('events.attending');
+
+    Route::post('/events/{id}/comments', StoreCommentController::class)->name('events.comments');
+    Route::delete('/events/{id}/comments/{comment}', DeleteCommentController::class)->name('events.comments.destroy');
 
     Route::resource('/galleries', GalleryController::class);
 

@@ -173,6 +173,7 @@
                     class="container p-4 mt-6 rounded-md d-flex justify-content-center align-items-center w-50 bg-slate-200">
                     <div class="">
                         <form
+                            action="{{ route('events.comments', $event->id) }}"
                             class="flex justify-between space-x-2"
                             method="POST"
                         >
@@ -193,33 +194,46 @@
                         </form>
                     </div>
                     <div class="w-full">
-                        {{-- @foreach ($event->comments()->latest()->get() as $comment)
+                        @foreach ($event->comments()->latest()->get() as $comment)
                             <div class="w-full p-4 duration-500">
                                 <div class="flex items-center p-4 bg-white rounded-lg shadow-md shadow-indigo-50">
                                     <div>
                                         <div class="flex space-x-2">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                                stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                                                <path stroke-linecap="round" stroke-linejoin="round"
-                                                    d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
+                                            <svg
+                                                xmlns="http://www.w3.org/2000/svg"
+                                                fill="none"
+                                                viewBox="0 0 24 24"
+                                                stroke-width="1.5"
+                                                stroke="currentColor"
+                                                class="w-6 h-6"
+                                            >
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
                                             </svg>
-                                            <h2 class="text-lg font-bold text-gray-900">{{ $comment->user->name }}</h2>
+                                            <h2 class="text-lg font-bold text-gray-900">
+                                                {{ $comment->user->name }}
+                                            </h2>
                                         </div>
-                                        <p class="text-sm font-semibold text-gray-400">{{ $comment->content }}</p>
-                                        @can('view', $comment)
-                                            <form action="{{ route('events.comments.destroy', [$event->id, $comment->id]) }}"
-                                                method="POST">
+                                        <p class="text-sm font-semibold text-gray-400">
+                                            {{ $comment->content }}
+                                        </p>
+                                        @if(Auth::user()->id === $comment->user_id)
+                                            <form
+                                                action="{{ route('events.comments.destroy', [$event->id, $comment->id]) }}"
+                                                method="POST"
+                                            >
                                                 @csrf
                                                 @method('DELETE')
                                                 <button
-                                                    class="px-4 py-2 mt-6 text-sm tracking-wider bg-red-400 rounded-lg outline-none hover:bg-red-300">Delete</button>
-
+                                                    class="px-4 py-2 mt-6 text-sm tracking-wider text-white bg-red-400 rounded-lg outline-none hover:bg-red-300"
+                                                >
+                                                    Delete
+                                                </button>
                                             </form>
-                                        @endcan
+                                        @endif
                                     </div>
                                 </div>
                             </div>
-                        @endforeach --}}
+                        @endforeach
                     </div>
                 </div>
             @endauth
