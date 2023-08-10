@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\SavedEvent;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -55,12 +56,15 @@ class Event extends Model
         return $this->hasMany(Comment::class);
     }
 
-
     public function likes(): HasMany
     {
         return $this->hasMany(Like::class);
     }
 
+    public function savedEvents(): HasMany
+    {
+        return $this->hasMany(SavedEvent::class);
+    }
 
     public function attendings(): HasMany
     {

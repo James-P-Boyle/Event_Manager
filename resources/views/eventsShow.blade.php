@@ -18,24 +18,36 @@
                         </div>
                     </a>
                 </div>
+
                 @auth
                     <div
-                        class="flex p-4 space-x-2"
+                        class="flex gap-4 py-2"
                         x-data="{
-                            eventLike: @js($like),
-                            city: null,
-                            cities: [],
+                            likeEvent: @js($like),
+                            savedEvent: @js($savedEvent),
+                            attending: @js($attending),
                             onHandleLike(event) {
                                 axios.post(`/events-like/{{ $event->id }}`).then(res => {
-                                    this.eventLike = res.data
+                                    this.likeEvent = res.data
                                 })
-                            }}"
+                            },
+                            onHandleSaveEvent(event) {
+                                axios.post(`/events-save/{{ $event->id }}`).then(res => {
+                                    this.savedEvent = res.data
+                                })
+                            },
+                            onHandleAttendingEvent(event) {
+                                axios.post(`/events-attending/{{ $event->id }}`).then(res => {
+                                    this.attending = res.data
+                                })
+                            },
+                        }"
                     >
                         <button
                             @click="onHandleLike"
-                            :class="eventLike ? 'text-green-700 scale-110 font-bold drop-shadow hover:text-green-800' : 'text-blue-700 hover:text-blue-800'"
+                            :class="likeEvent ? 'bg-green-700 hover:bg-green-800 drop-shadow' : 'bg-slate-700 hover:bg-slate-800'"
                             type="button"
-                            class="focus:outline-none focus:ring-0 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2"
+                            class="text-white focus:outline-none focus:ring-0 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center mr-2"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -54,8 +66,10 @@
                             Like
                         </button>
                         <button
+                            @click="onHandleSaveEvent"
+                            :class="savedEvent ? 'bg-green-700 hover:bg-green-800 drop-shadow' : 'bg-slate-700 hover:bg-slate-800'"
                             type="button"
-                            class="focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
+                            class=" text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -74,8 +88,10 @@
                             Save
                         </button>
                         <button
+                            @click="onHandleAttendingEvent"
                             type="button"
-                            class="focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
+                            :class="attending ? 'bg-green-700 hover:bg-green-800 drop-shadow' : 'bg-slate-700 hover:bg-slate-800'"
+                            class=" text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
                         >
                             Attending
                             <svg
@@ -170,7 +186,7 @@
                             >
                             <button
                                 type="submit"
-                                class="bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
+                                class="bg-blue-700 hover:bg-blue-800  text-white focus:outline-none font-medium rounded-lg text-sm px-5 py-2.5 text-center inline-flex items-center"
                             >
                                 Post
                             </button>
